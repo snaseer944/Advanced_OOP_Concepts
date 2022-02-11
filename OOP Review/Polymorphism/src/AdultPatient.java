@@ -4,7 +4,7 @@ public class AdultPatient extends Person implements Diagnosable, Employable {
     double temperature;
     int systolic;
     int diastolic;
-    ArrayList<String> job = new ArrayList<String>();
+    ArrayList<String> jobs = new ArrayList<String>();
 
     @Override
     public double getTemperature() {
@@ -32,10 +32,10 @@ public class AdultPatient extends Person implements Diagnosable, Employable {
     }
     @Override
     public ArrayList<String> getPreviousJobs() {
-        return this.job;
+        return this.jobs;
     }
     @Override
     public void addJob(String j){
-        this.job.add(j); }
+        this.jobs.add(j); }
 
 }

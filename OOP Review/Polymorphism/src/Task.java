@@ -11,11 +11,11 @@ public class Task {
         ChildPatient maggie = new ChildPatient();
         AdultPatient homer = new AdultPatient();
         Employable marge = new AdultPatient();
-
+        //TODO
         ((ChildPatient) bart).setTemperature(101.2);
         maggie.setTemperature(100.1);
         lisa.setTemperature(100.6);
-
+        //TODO
         homer.addJob("Nuclear Engineer" );
         homer.addJob("Major" );
         homer.addJob("Bar Owner" );

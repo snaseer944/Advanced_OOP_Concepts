@@ -14,8 +14,8 @@ public class Square extends Shape {
 
     @Override
     public double getPerimeter() {
-        double p = 4 * this.sLength;
-        return p;
+        double per = 4 * this.sLength;
+        return per;
     }
 
     @Override

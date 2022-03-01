@@ -23,16 +23,16 @@ public class Counter<E> {
     }
 
     public E mostFrequent(){
-        Integer max = 0;
-        E maxKey = null;
+        int max = 0;
+        E mKey = null;
 
         for (E key : counts.keySet() ) {
             if (counts.get(key) > max) {
                 max = counts.get(key);
-                maxKey = key;
+                mKey = key;
             }
         }
 
-        return maxKey;
+        return mKey;
     }
 }

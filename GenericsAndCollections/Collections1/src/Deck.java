@@ -1,29 +1,37 @@
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 public class Deck implements Iterable<Card>{
     private List<Card> deck;
     private String[] suits = {"Hearts","Clubs","Diamonds","Spades"};
     public Deck() {
-/* TODO 
-This constructor initializes the deck variable with
-all the cards of a deck, except a joker.
-The suits array may help you.*/        }
+
+        this.deck = new LinkedList<>();
+
+        for (int i = 0; i < suits.length; i++) {
+            for (int j = 2; j <= 10; j++) {
+                deck.add(new Card<Integer, String>(j, suits[i]));
+            }
+            deck.add(new Card<String, String>("Ace", suits[i]));
+            deck.add(new Card<String, String>("Jack", suits[i]));
+            deck.add(new Card<String, String>("Queen", suits[i]));
+            deck.add(new Card<String, String>("King", suits[i]));
+            }
+
     }
 
     public Card dealCard(){
-/* TODO
-Code this. It is almost EXACTLY as the  method to draw one object
-from the bag in the previous task. The difference is that this method
-REMOVES the card from the deck */
+        int index = (int)(Math.random() * this.deck.size());
+        Card c = this.deck.get(index);
+        this.deck.remove(index);
+        return c;
     }
 
-    public int size(){/* TODO: Return the size of the deck (number of cards left in it)*/
+    public int size(){
+
+        return this.deck.size();
     }
     @Override
     public Iterator<Card> iterator() {
-       /* TODO 
-Return a new DeckIterator with this instance in the constructor.*/
+       return new DeckIterator<>(this);
     }
 }

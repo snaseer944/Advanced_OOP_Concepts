@@ -1,63 +1,95 @@
 import com.github.cliftonlabs.json_simple.JsonArray;
 import com.github.cliftonlabs.json_simple.JsonObject;
 import com.github.cliftonlabs.json_simple.Jsoner;
+
 import java.io.DataOutputStream;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.Scanner;
 
 public class TVShowsDatabase {
 
     String baseUrl = "http://api.tvmaze.com/search/";
 
-Create a method getURLSource that returns a String and gets a URL object as a parameter. It should also throw an exception.
-This method should read the open stream of the url and concatenate it in a String. It should then return that String.
+    public JsonObject getURLSource (String show) throws IOException {
+        String data = "";
+        URL url = new URL(baseUrl + "i=" + show);
+        Scanner input = new Scanner(url.openStream());
+
+        while (input.hasNext())
+            data += input.nextLine();
+
+        input.close();
+        data = "{\"result\":" + data + "}";
+        return (JsonObject) Jsoner.deserialize(data, new JsonObject());
+
+
+    }
 
     public JsonObject getShowsByName(String name) throws Exception
     {
-        //Getting the things ready to connect to the web
         URL url = new URL(baseUrl+"shows?q="+name);
-/* TODO 
-You have to use the url to retrieve the contents of the website. 
-This will be a String, but in JSON format. Use the auxiliary function you created above. */
-        return /* TODO 
-Remember to return a JSON object.*/;
-    }
+        Scanner input = new Scanner(url.openStream());
+        String data = "";
 
+            while (input.hasNext())
+                data += input.nextLine();
+
+            input.close();
+        data = "{\"result\":" + data + "}";
+        return (JsonObject)Jsoner.deserialize(data, new JsonObject());
+
+
+    }
 
     public JsonObject getPeopleInShows(String query) throws Exception
     {
-        //Getting the things ready to connect to the web
-        /* TODO 
-Fill in this data type (Object) */ url = new /* TODO
-Fill in this datatype (Object) */(baseUrl+"people?q="+query);
+        URL url = new URL (baseUrl+"people?q="+query);
+        String data = "";
 
-       /* TODO
-Read the information coming from the web
- */
-        return /* TODO 
-return the appropriate result.
-*/
+            Scanner input = new Scanner(url.openStream());
+            while (input.hasNext())
+                data += input.nextLine();
+
+        input.close();
+        data = "{\"result\":" + data + "}";
+        return (JsonObject) Jsoner.deserialize(data, new JsonObject());
+
+
     }
-
 
     public String formatShowAsString(JsonObject doc){
         String results = "";
-        /* TODO 
-This should return a String with each show in four fields:
-Name:the name of the show
-Link:the link to the show
-rating average:The rating average of teh show, and 
-summary, the summary of the show.*/
+        JsonArray shows = (JsonArray) doc.get("result");
+        for (int i =0; i < shows.size(); i++){
+            JsonObject show = (JsonObject)((JsonObject)shows.get(i)).get("show");
+            String name = (String ) show.get("name");
+            String link = (String ) show.get("url");
+            BigDecimal rating = (BigDecimal)((JsonObject) show.get("rating")).get("average");
+            String summary = (String ) show.get("summary");
+
+            results += "Name:" + name + "\n" + "Link:" + link + "\n" + "Rating Average:" + rating + "\n" + "Summary:" + summary + "\n";
+        }
         return results;
     }
 
+
+
     public void saveShows(String text, String outfile){
-        /* TODO
-Given a String with some text in it, write that text to a file. 
-The name of the file is given in outfile */
+        try{
+            FileOutputStream output = new FileOutputStream(outfile);
+            output.write(text.getBytes(StandardCharsets.UTF_8));
+        }catch(IOException e){
+            e.printStackTrace();
+        }
     }
 
 }
+
+
+
+

@@ -28,14 +28,25 @@ public class Database {
     }
 
     public Database(String contents) {
-/* TODO 
-This constructor should take the contents of a CSV file and initialize the memember variables of the Database class.
-*/
+        String[] content  = contents.split("\\n");
+        this.colNames = content[0].split(",");
+        this.numRows = content.length - 1;
+        this.data = new String[content.length - 1][this.colNames.length];
+        for(int i = 0; i < content.length - 1; i++){
+            this.data[i] = content[i + 1].split(",");
+
+        }
+
     }
 
     public String getValue(String columnName,int row){
-/* TODO */
-This method should return the data contained on row "row" and the column matching  @columname
+       int col = 0;
+       for(int i = 0; i < colNames.length; i++){
+           if(colNames[i].equals(columnName))
+               col = i;
+
+       }
+       return this.data[row][col];
     }
 
 }

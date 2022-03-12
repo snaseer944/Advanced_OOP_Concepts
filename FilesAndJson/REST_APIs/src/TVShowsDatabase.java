@@ -15,17 +15,17 @@ public class TVShowsDatabase {
 
     String baseUrl = "http://api.tvmaze.com/search/";
 
-    public JsonObject getURLSource (String show) throws IOException {
+    public String getURLSource (URL show) throws IOException {
         String data = "";
-        URL url = new URL(baseUrl + "i=" + show);
-        Scanner input = new Scanner(url.openStream());
+        //URL url = new URL(baseUrl + "i=" + show);
+        Scanner input = new Scanner(show.openStream());
 
         while (input.hasNext())
             data += input.nextLine();
 
         input.close();
         data = "{\"result\":" + data + "}";
-        return (JsonObject) Jsoner.deserialize(data, new JsonObject());
+        return data;
 
 
     }
@@ -33,14 +33,7 @@ public class TVShowsDatabase {
     public JsonObject getShowsByName(String name) throws Exception
     {
         URL url = new URL(baseUrl+"shows?q="+name);
-        Scanner input = new Scanner(url.openStream());
-        String data = "";
-
-            while (input.hasNext())
-                data += input.nextLine();
-
-            input.close();
-        data = "{\"result\":" + data + "}";
+        String data = getURLSource(url);
         return (JsonObject)Jsoner.deserialize(data, new JsonObject());
 
 
@@ -49,15 +42,8 @@ public class TVShowsDatabase {
     public JsonObject getPeopleInShows(String query) throws Exception
     {
         URL url = new URL (baseUrl+"people?q="+query);
-        String data = "";
-
-            Scanner input = new Scanner(url.openStream());
-            while (input.hasNext())
-                data += input.nextLine();
-
-        input.close();
-        data = "{\"result\":" + data + "}";
-        return (JsonObject) Jsoner.deserialize(data, new JsonObject());
+        String data = getURLSource(url);
+        return (JsonObject)Jsoner.deserialize(data, new JsonObject());
 
 
     }

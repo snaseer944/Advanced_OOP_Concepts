@@ -2,22 +2,78 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Resume {
-/* TODO */
-Create a public member inner class Education according to the specifications.
+    public  class Education{
+    String school;
+    String major;
+        public Education(String school, String major){
+            this.school = school;
+            this.major = major;
+        }
 
-/* TODO */
-Create a public static inner class called Experience, according to the specifications.
+        public String getSchool() {
+            return school;
+        }
 
-/* TODO */
-Create the Person and List of Education and List of experience objects. They should be private.
-    public Resume(Person p){
-/* TODO */
-This constructor should initialize the person and do all necessary initializations for the other methods to work.
+        public String getMajor() {
+            return major;
+        }
+        public String toString(){
+            return this.major +" at " + this.school;
+        }
     }
 
-/* TODO */
-Create the addEducation, addExperience and override the toString methods as specified.
+    public static class Experience{
+        String title;
+        int fromYear;
+        int toYear;
+
+       public Experience(String title, int fromyear, int toyear){
+           this.title = title;
+           this.toYear = toyear;
+           this.fromYear = fromyear;
+
+       }
+
+        public String toString() {
+            return toYear+ "-" +
+                    fromYear + ":" + title;
+
+        }
+    }
+
+    private Person person;
+    private List<Education> eduList;
+    private List<Experience> expList;
+
+    public Resume(Person p) {
+        this.person = p;
+        this.eduList = new ArrayList<>();
+        this.expList = new ArrayList<>();
+
+    }
+    public void addExperience(Experience exp){
+        this.expList.add(exp);
+    }
+    public void addEducation(Education edu){
+        this.eduList.add(edu);
+    }
+
+    public String toString(){
+        String str = this.person.toString();
+        str += "\nExperience";
+        for (Experience exp: expList) {
+           str += "\n" + exp;
+
+        }
+        str += "\nEducation";
+        for (Education edu: eduList) {
+            str += "\n" + edu;
+        }
+
+            return str;
+        }
+    }
 
 
 
-}
+
